@@ -50,3 +50,12 @@ Only 4 of the 9 photos show the device: 61O3u (3/4 view on a face), 71nP77 (fron
   with a gold see-through visor and a nose/mouth breathing window, so I model what the photos show:
   white `Shell`, gold `Visor`, eye windows and a nose/mouth slot as separate glass/opening geometry,
   with no LEDs in those zones.
+
+## v2: matched to the HALO PRO campaign photo
+The owner's reference (three models wearing the HALO PRO) shows a different front from the listing renders:
+- **Shell:** a rounded, satin off-white helmet front shaped like a superellipsoid egg. It wraps to just in front of the ears and has large fillets everywhere.
+- **Visor:** ONE continuous egg-shaped mirror-gold visor recessed into a thick, rounded white rim. The rim is thin at the top and thicker at the sides and chin. There are no eye holes and no nose slot.
+- **MouthSlit:** a thin dark crescent across the lower third that curves up at the ends.
+- **Pods:** horizontal capsules at the temples with an oval touch plate (embossed "A" on one) and a strap rod out the back.
+- **Strap:** slim grey bands, one over the crown and one around the back of the head.
+- **NeckCover:** a separate bib that continues down from the chin and flares forward toward the collarbone. Its bottom edge is lower at the front.

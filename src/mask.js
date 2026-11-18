@@ -1,18 +1,19 @@
 // Scroll-driven 3D LED face mask.
 //
-// There is no production 3D file of the Halo mask, so the mask is built
-// procedurally: a face-shaped shell with eye and mouth openings, studded with
-// LED points that change color as the visitor scrolls through each
-// light chapter. Swap `buildShell()` for a GLTF loader once a real model exists.
+// Loads the Blender model named by <canvas data-model>, and falls back to a
+// procedural stand-in (a face-shaped shell with eye and mouth openings). Either
+// way the LEDs sit only on the inside (face side) and change color as the
+// visitor scrolls through each light chapter.
 
 import {
   WebGLRenderer, Scene, PerspectiveCamera, Group, BufferGeometry,
   Float32BufferAttribute, MeshPhysicalMaterial, Mesh, DoubleSide, Color,
   Points, PointsMaterial, AdditiveBlending, CanvasTexture, PMREMGenerator,
   DirectionalLight, PointLight, InstancedMesh, CircleGeometry,
-  MeshBasicMaterial, Object3D, Vector3, ACESFilmicToneMapping, SRGBColorSpace,
+  MeshBasicMaterial, Object3D, Vector3, ACESFilmicToneMapping, SRGBColorSpace, Box3,
 } from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 const canvas = document.getElementById('mask-canvas');
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -121,6 +122,76 @@ function glowTexture() {
   return new CanvasTexture(c);
 }
 
+/* ---------- procedural stand-in ---------- */
+
+function buildProcedural(shellMat, ledMat, glowMat) {
+  const group = new Group();
+  // cut eye and mouth openings per pixel so their edges stay smooth
+  const mat = shellMat.clone();
+  mat.onBeforeCompile = (sh) => {
+    sh.vertexShader = 'varying vec2 vFace;\n' + sh.vertexShader.replace(
+      '#include <begin_vertex>', '#include <begin_vertex>\n vFace = position.xy;');
+    sh.fragmentShader = 'varying vec2 vFace;\n' + sh.fragmentShader.replace('void main() {', `void main() {
+      vec2 l = (vFace - vec2(-0.34, 0.2)) / vec2(0.17, 0.085);
+      vec2 r = (vFace - vec2(0.34, 0.2)) / vec2(0.17, 0.085);
+      vec2 m = (vFace - vec2(0.0, -0.7)) / vec2(0.21, 0.06);
+      if (min(min(dot(l, l), dot(r, r)), dot(m, m)) < 1.0) discard;`);
+  };
+  group.add(new Mesh(buildShell(), mat));
+
+  // LEDs only on the inside (face side) of the shell, like the real mask
+  const { pts, normals } = ledLayout();
+  const leds = new InstancedMesh(new CircleGeometry(0.019, 10), ledMat, pts.length);
+  const dummy = new Object3D();
+  pts.forEach((p, i) => {
+    dummy.position.copy(p).addScaledVector(normals[i], -0.018);
+    dummy.lookAt(dummy.position.clone().addScaledVector(normals[i], -1));
+    dummy.updateMatrix();
+    leds.setMatrixAt(i, dummy.matrix);
+  });
+  group.add(leds);
+  const glowGeo = new BufferGeometry().setFromPoints(pts.map((p, i) => p.clone().addScaledVector(normals[i], -0.04)));
+  group.add(new Points(glowGeo, glowMat));
+  return group;
+}
+
+/* ---------- Blender model ---------- */
+
+function prepareModel(root, shellMat, ledMat, glowMat, rotY) {
+  const group = new Group();
+  root.updateMatrixWorld(true);
+  const glowPts = [];
+  root.traverse((o) => {
+    if (!o.isMesh) return;
+    const matName = [].concat(o.material).map((m) => m?.name || '').join(' ');
+    if (/led/i.test(o.name) || /led/i.test(o.parent?.name || '') || /led_emissive/i.test(matName)) {
+      o.material = ledMat;
+      const pos = o.geometry.attributes.position;
+      const stride = Math.max(1, Math.round(pos.count / 900));
+      for (let i = 0; i < pos.count; i += stride) {
+        glowPts.push(new Vector3().fromBufferAttribute(pos, i).applyMatrix4(o.matrixWorld));
+      }
+    } else if (o.material && !o.material.isMeshStandardMaterial) {
+      o.material = shellMat;   // keep the model's own PBR materials (white shell, gold visor)
+    }
+  });
+  group.add(root);
+  if (glowPts.length) {
+    const g = new Points(new BufferGeometry().setFromPoints(glowPts), glowMat);
+    group.add(g);
+  }
+  // normalise: centre the mask and make it 2.64 units tall like the stand-in
+  const box = new Box3().setFromObject(group);
+  const size = box.getSize(new Vector3()), centre = box.getCenter(new Vector3());
+  const k = 2.64 / size.y;
+  const wrap = new Group();
+  group.position.sub(centre);
+  wrap.add(group);
+  wrap.scale.setScalar(k);
+  if (rotY) wrap.rotation.y = parseFloat(rotY);
+  return wrap;
+}
+
 /* ---------- scene ---------- */
 
 function init() {
@@ -146,41 +217,25 @@ function init() {
   const shellMat = new MeshPhysicalMaterial({
     color: 0xf4f0eb, roughness: 0.32, metalness: 0, clearcoat: 0.8,
     clearcoatRoughness: 0.18, side: DoubleSide, sheen: 0.4, sheenColor: new Color(0xffffff),
+    emissive: 0xff3030, emissiveIntensity: 0.05,   // faint light bleeding through the silicone
   });
-  // cut eye and mouth openings per pixel so their edges stay smooth
-  shellMat.onBeforeCompile = (sh) => {
-    sh.vertexShader = 'varying vec2 vFace;\n' + sh.vertexShader.replace(
-      '#include <begin_vertex>', '#include <begin_vertex>\n vFace = position.xy;');
-    sh.fragmentShader = 'varying vec2 vFace;\n' + sh.fragmentShader.replace('void main() {', `void main() {
-      vec2 l = (vFace - vec2(-0.34, 0.2)) / vec2(0.17, 0.085);
-      vec2 r = (vFace - vec2(0.34, 0.2)) / vec2(0.17, 0.085);
-      vec2 m = (vFace - vec2(0.0, -0.7)) / vec2(0.21, 0.06);
-      if (min(min(dot(l, l), dot(r, r)), dot(m, m)) < 1.0) discard;`);
-  };
-  const shell = new Mesh(buildShell(), shellMat);
-  mask.add(shell);
-
-  const { pts, normals } = ledLayout();
-  const ledMat = new MeshBasicMaterial({ color: 0xff3030, toneMapped: false });
-  const leds = new InstancedMesh(new CircleGeometry(0.019, 10), ledMat, pts.length * 2);
-  const dummy = new Object3D();
-  pts.forEach((p, i) => {
-    for (const side of [1, -1]) {
-      dummy.position.copy(p).addScaledVector(normals[i], side > 0 ? 0 : -0.012);
-      dummy.lookAt(dummy.position.clone().addScaledVector(normals[i], side));
-      dummy.updateMatrix();
-      leds.setMatrixAt(i * 2 + (side > 0 ? 0 : 1), dummy.matrix);
-    }
-  });
-  mask.add(leds);
-
-  const glowGeo = new BufferGeometry().setFromPoints(pts.flatMap((p, i) => [
-    p.clone().addScaledVector(normals[i], 0.01), p.clone().addScaledVector(normals[i], -0.03)]));
+  const ledMat = new MeshBasicMaterial({ color: 0xff3030, toneMapped: false, side: DoubleSide });
   const glowMat = new PointsMaterial({
     size: isSmall ? 0.2 : 0.17, map: glowTexture(), color: 0xff3030, transparent: true,
     opacity: 0.55, blending: AdditiveBlending, depthWrite: false, sizeAttenuation: true,
   });
-  mask.add(new Points(glowGeo, glowMat));
+
+  const procedural = buildProcedural(shellMat, ledMat, glowMat);
+  mask.add(procedural);
+
+  // A real model (exported from Blender) replaces the coded stand-in when the
+  // canvas names one: <canvas id="mask-canvas" data-model="assets/models/halo-mask.glb">
+  if (canvas.dataset.model) {
+    new GLTFLoader().load(new URL(canvas.dataset.model, document.baseURI).href, (gltf) => {
+      mask.remove(procedural);
+      mask.add(prepareModel(gltf.scene, shellMat, ledMat, glowMat, canvas.dataset.modelRot));
+    }, undefined, () => { /* keep the stand-in */ });
+  }
 
   const key = new DirectionalLight(0xffffff, 1.4);
   key.position.set(3, 4, 5);
@@ -188,8 +243,9 @@ function init() {
   const rim = new DirectionalLight(0xffe6d6, 0.8);
   rim.position.set(-4, 1, -3);
   scene.add(rim);
-  const bounce = new PointLight(0xff3030, 6, 6, 1.6);
-  bounce.position.set(0, 0, 1.6);
+  // the LEDs sit on the face side, so their light comes from inside the mask
+  const bounce = new PointLight(0xff3030, 4, 1.7, 1.6);
+  bounce.position.set(0, 0, -0.9);
   mask.add(bounce);
 
   /* ---------- scroll keyframes ---------- */
