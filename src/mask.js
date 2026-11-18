@@ -244,7 +244,7 @@ function init() {
   rim.position.set(-4, 1, -3);
   scene.add(rim);
   // the LEDs sit on the face side, so their light comes from inside the mask
-  const bounce = new PointLight(0xff3030, 5, 4, 1.4);
+  const bounce = new PointLight(0xff3030, 4, 1.7, 1.6);
   bounce.position.set(0, 0, -0.9);
   mask.add(bounce);
 
