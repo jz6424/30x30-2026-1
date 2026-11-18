@@ -31,9 +31,13 @@ Shopify store at [aphronabeauty.com](https://www.aphronabeauty.com); the store a
 
 ### About the 3D mask
 
-There was no 3D file of the Halo mask, so `src/mask.js` builds a stand-in procedurally: a face-shaped shell
-with smooth eye and mouth openings and LED points on both faces. The page says it is illustrative. To use a
-real model, export the mask as GLB and replace `buildShell()` with a `GLTFLoader` call.
+`site/assets/models/halo-mask.glb` (1.25 MB, ~43k triangles) was modelled in Blender from the Halo product photos:
+white shell, gold visor, eye windows, neck cover, straps, temple buttons and 808 LED beads on the **inside only**.
+The build script, `.blend` file, previews and shape notes are in `docs/model/`. Proportions are eyeballed from
+photos, not measured.
+
+`src/mask.js` loads the model named by `<canvas data-model>` and recolors any mesh or material named `LED*` as
+you scroll. If the GLB is missing or fails to load, it falls back to a procedural stand-in (also inside-only LEDs).
 
 ## Develop
 
