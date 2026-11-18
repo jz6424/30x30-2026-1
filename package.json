@@ -1,0 +1,16 @@
+{
+  "name": "aphrona-landing",
+  "private": true,
+  "version": "1.0.0",
+  "description": "SEO and AI-discovery landing site for Aphrona Beauty LED devices. Links out to the existing Shopify store.",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "serve": "node scripts/serve.mjs",
+    "dev": "node scripts/build.mjs && node scripts/serve.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "three": "^0.187.0"
+  }
+}
