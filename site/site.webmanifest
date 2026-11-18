@@ -1,0 +1,9 @@
+{
+  "name": "Aphrona Beauty: LED light therapy, explained",
+  "short_name": "Aphrona",
+  "start_url": "./",
+  "display": "browser",
+  "background_color": "#0e0b0c",
+  "theme_color": "#0e0b0c",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

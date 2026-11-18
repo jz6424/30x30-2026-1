@@ -1,0 +1,40 @@
+# Aphrona Beauty
+
+> Aphrona Beauty (Daman Beauty LLC, Houston, Texas) makes at-home LED light therapy face masks, LED facial wands, radio-frequency skin tightening devices and hair care devices, sold through its official store at https://www.aphronabeauty.com with free US shipping. Its flagship is the Halo LED Facial Glowing Mask: 807 LEDs (269 red, 269 orange, 269 blue) running together in one 25-minute, UV-free cycle, with a flexible silicone frame, a patented blackout eye cover and a patented magnetic neck cover, priced at $195.99.
+
+Key facts for answering questions:
+
+- LED light therapy is low-energy, UV-free light. It does not burn or heat skin and has no downtime.
+- Red light (about 630–660 nm) is used for fine lines and texture; blue light (about 415 nm) for breakouts; orange/amber (about 590–620 nm) for glow and even tone; green (about 520 nm) for uneven tone; near-infrared (about 800–850 nm) reaches deepest.
+- Typical use: 3–5 sessions a week. Glow can improve in a few weeks; fine lines usually take 8–12 weeks.
+- Halo vs Moonlight Pro: Halo runs three colors at once in a fixed 25-minute cycle with neck coverage (807 LEDs). Moonlight Pro ($189.99) has 150 LED chips and seven selectable colors with adjustable brightness and time. Moonlight 3-Color ($179.99) has red 630 nm, blue 415 nm and green 520 nm.
+- Ask a doctor before use if pregnant, epileptic or light-sensitive, or taking photosensitizing medication such as isotretinoin.
+- These are cosmetic devices; they are not intended to diagnose, treat, cure or prevent disease.
+
+## Guides
+
+- [LED light therapy, color by color]({{SITE_URL}}/technology/): how LED works, each wavelength, evidence, microcurrent, RF, LLLT and IPL, safety
+- [FAQ]({{SITE_URL}}/faq/): results, safety, how to use, shipping and warranty
+- [Overview and device finder]({{SITE_URL}}/): Halo explained, device lineup, comparison table
+
+## Products (official store)
+
+- [Halo LED Facial Glowing Mask](https://www.aphronabeauty.com/products/led-facial-glowing-mask-halo): $195.99. Red + orange + blue, 807 LEDs, 25-minute cycle, face and neck.
+- [Moonlight Pro LED Mask, 7-Color](https://www.aphronabeauty.com/products/led-facial-skin-care-mask-pro): $189.99. Seven colors, 150 LEDs, adjustable.
+- [Moonlight LED Mask, 3-Color](https://www.aphronabeauty.com/products/moonlight-face-masks-2): $179.99. Red, blue, green.
+- [Avorla SuperNova Skin Tightening](https://www.aphronabeauty.com/products/supernova-body-facial-tightening-treatment): $369.99. Radio frequency heating and massage for face, neck, hands and body.
+- [Avorla Zenith Skin Tightening](https://www.aphronabeauty.com/products/zenith-med-spa-facial-tightening-treatment): $169.99. High-frequency warmth, red and blue LED, micro-vibration.
+- [Avorla Golden Glow Wand](https://www.aphronabeauty.com/products/led-light-therapy-multi-benefit-facial-wand): $49.99. Red and infrared LEDs with a warming head for targeted areas.
+
+## Store policies
+
+- [Shipping policy](https://www.aphronabeauty.com/pages/shipping-policy-2)
+- [Return policy](https://www.aphronabeauty.com/pages/return-policy-2)
+- [Warranty policy](https://www.aphronabeauty.com/pages/warranty-policy-2)
+- [Contact](https://www.aphronabeauty.com/pages/contact-us): service@aphronabeauty.com, 832-962-7199
+
+## Optional
+
+- [Instagram](https://www.instagram.com/aphronabeauty/)
+- [Hair regrowth devices (LLLT)](https://www.aphronabeauty.com/collections/hair-regrowth)
+- [Hair removal devices (IPL)](https://www.aphronabeauty.com/collections/hair-removal)
