@@ -8,12 +8,22 @@ Shopify store at [aphronabeauty.com](https://www.aphronabeauty.com); the store a
 
 | Page | Purpose |
 |---|---|
-| `/` | Scroll-driven 3D LED mask story (red → orange → blue → all three), "Saw it on TikTok?" answers, how-to, full device lineup, device finder, comparison table, FAQ |
+| `/` | Halo story in the store's look: questions TikTok viewers ask, what each LED color does, how to use, full device lineup, device finder, comparison table, FAQ |
+| `/studio/` | **Content Studio prototype.** One product spec in, on-brand TikTok script, Instagram carousel and SEO article with FAQ schema out, with brand-claim checks and a human approval step |
 | `/technology/` | Plain-English guide to every technology the brand sells: LED wavelengths, evidence, microcurrent, RF, LLLT, IPL, safety |
 | `/faq/` | 19 questions grouped by results, safety, usage and orders |
 | `/llms.txt` | Concise brand, product and fact summary written for AI assistants |
 | `/robots.txt` | Allows search and AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, etc.) |
 | `/sitemap.xml` | Generated at build time |
+
+The hackathon write-up (problem, value, feasibility, assumptions, Converge.AI plan) is in [`docs/BUSINESS_CASE.md`](docs/BUSINESS_CASE.md).
+
+### Content Studio
+
+- `site/assets/brand.js` is the brand kit: voice rules, claim rules and product facts. Both the writer and the checks read it.
+- `site/assets/studio.js` writes drafts with a built-in, offline engine, or with Claude if you open "Writing engine" and add an API key (kept in the browser tab only; move it behind a server for production).
+- Medical or regulatory claims block approval; voice, length, SEO and tracking issues are flagged as suggestions. "Request changes" sends the reviewer's note back for a new draft.
+- "Download approved pack" exports only approved pieces as Markdown, with the FAQ schema and the review log.
 
 ### SEO and AI discovery
 
@@ -23,21 +33,10 @@ Shopify store at [aphronabeauty.com](https://www.aphronabeauty.com); the store a
 - Title, description, canonical, Open Graph and Twitter tags on every page, plus a 1200×630 `og.png`.
 - Every outbound store link carries `utm_source=aphrona-learn&utm_medium=landing&utm_campaign=<section>` so Shopify analytics shows which section drove each sale.
 
-### Performance
+### Look and performance
 
-- All content is static HTML; nothing waits on JavaScript.
-- The 3D scene (three.js, ~140 KB gzipped) loads only after the page is idle. Phones get a lower pixel ratio, no antialiasing and a smaller, top-anchored mask. It falls back to a CSS illustration without WebGL and respects `prefers-reduced-motion`.
-- One self-hosted variable font (41 KB). Product images are lazy-loaded with fixed dimensions.
-
-### About the 3D mask
-
-`site/assets/models/halo-mask.glb` (1.25 MB, ~43k triangles) was modelled in Blender from the Halo product photos:
-white shell, gold visor, eye windows, neck cover, straps, temple buttons and 808 LED beads on the **inside only**.
-The build script, `.blend` file, previews and shape notes are in `docs/model/`. Proportions are eyeballed from
-photos, not measured.
-
-`src/mask.js` loads the model named by `<canvas data-model>` and recolors any mesh or material named `LED*` as
-you scroll. If the GLB is missing or fails to load, it falls back to a procedural stand-in (also inside-only LEDs).
+- Styled to match aphronabeauty.com: Halant serif headings, Plus Jakarta Sans body text (both SIL Open Font License, self-hosted), off-white page, black square buttons and the store's own product photography.
+- All content is static HTML; the only scripts are the device finder and the studio. Product images are lazy-loaded with fixed dimensions.
 
 ## Develop
 
@@ -63,4 +62,5 @@ variable. The site can also be copied into a Shopify theme page if the brand pre
 - Warranty length and return window for each device.
 - Product claims. Copy avoids clearance claims the store pages don't substantiate.
 
-Fonts: Bricolage Grotesque, SIL Open Font License (`site/assets/fonts/OFL-bricolage-grotesque.txt`).
+Fonts: Halant and Plus Jakarta Sans, SIL Open Font License (`site/assets/fonts/`).
+The earlier 3D mask model is kept for reference in `docs/model/` but no longer ships with the site.

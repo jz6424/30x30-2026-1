@@ -1,22 +1,6 @@
-// Small, dependency-free page behaviour. The 3D mask loads after first paint
-// so it never blocks the text, which is what search engines and AI crawlers read.
+// Small, dependency-free page behaviour. All content is static HTML, so search
+// engines and AI crawlers read it without running any script.
 document.documentElement.classList.remove('no-js');
-
-// Reveal-on-scroll
-const io = 'IntersectionObserver' in window
-  ? new IntersectionObserver((entries) => {
-      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-    }, { rootMargin: '0px 0px -10% 0px' })
-  : null;
-document.querySelectorAll('.reveal').forEach((el) => (io ? io.observe(el) : el.classList.add('in')));
-
-// Lazy-load the 3D mask once the page is idle
-if (document.getElementById('mask-canvas')) {
-  const load = () => import('./mask.js').catch(() => document.documentElement.classList.add('no-webgl'));
-  const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 200));
-  if (document.readyState === 'complete') idle(load);
-  else addEventListener('load', () => idle(load), { once: true });
-}
 
 // "Find your device" chooser
 const STORE = 'https://www.aphronabeauty.com';
@@ -61,11 +45,11 @@ document.querySelectorAll('.choice').forEach((btn) => {
     if (!p || !result) return;
     const camp = `chooser-${btn.dataset.pick}`;
     result.innerHTML = `
-      <p class="eyebrow">Our pick for you</p>
+      <p class="eyebrow">Our suggestion</p>
       <h3>${p.name}</h3>
       <p class="why">${p.why}</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="${STORE}${p.url}${utm(camp)}">${p.price ? `Shop now, ${p.price}` : 'Browse the range'}</a>
+        <a class="btn" href="${STORE}${p.url}${utm(camp)}">${p.price ? `Shop now, ${p.price}` : 'Browse the range'}</a>
       </div>
       ${p.alt ? `<p class="note">Also consider: <a href="${STORE}${p.alt.url}${utm(camp + '-alt')}">${p.alt.name}</a>. ${p.alt.why}</p>` : ''}`;
   });

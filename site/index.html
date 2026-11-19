@@ -7,26 +7,26 @@
 <meta name="description" content="How at-home LED light therapy works, explained simply. The Aphrona Halo mask uses 807 red, orange and blue LEDs in one 25-minute, UV-free cycle. Compare devices, see the science and find the right one for your skin.">
 <link rel="canonical" href="{{SITE_URL}}/">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta name="theme-color" content="#0e0b0c">
+<meta name="theme-color" content="#fafafa">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="site.webmanifest">
 <link rel="alternate" type="text/plain" title="LLM summary" href="llms.txt">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Aphrona Beauty">
-<meta property="og:title" content="Clinic-style LED light therapy, 25 minutes on your couch">
-<meta property="og:description" content="807 red, orange and blue LEDs. One UV-free cycle. Here's how the Halo LED mask works and who it's for.">
+<meta property="og:title" content="Red, orange and blue LED light in one 25-minute ritual">
+<meta property="og:description" content="807 red, orange and blue LEDs in one UV-free cycle. How the Halo LED mask works, who it suits and how to use it.">
 <meta property="og:url" content="{{SITE_URL}}/">
 <meta property="og:image" content="{{SITE_URL}}/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="The Aphrona Halo LED face mask glowing red">
+<meta property="og:image:alt" content="Aphrona Halo LED Facial Mask: red, orange and blue light in one 25-minute ritual">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Clinic-style LED light therapy, 25 minutes on your couch">
-<meta name="twitter:description" content="807 red, orange and blue LEDs. One UV-free cycle. Here's how the Halo LED mask works.">
+<meta name="twitter:title" content="Red, orange and blue LED light in one 25-minute ritual">
+<meta name="twitter:description" content="807 red, orange and blue LEDs in one UV-free cycle. How the Halo LED mask works.">
 <meta name="twitter:image" content="{{SITE_URL}}/og.png">
 
-<link rel="preload" href="assets/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/halant-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://www.aphronabeauty.com">
 <link rel="stylesheet" href="assets/styles.css">
 <script type="module" src="assets/app.js"></script>
@@ -80,7 +80,7 @@
       "about": { "@id": "https://www.aphronabeauty.com/products/led-facial-glowing-mask-halo#product" },
       "primaryImageOfPage": "{{SITE_URL}}/og.png",
       "dateModified": "{{BUILD_DATE}}",
-      "speakable": { "@type": "SpeakableSpecification", "cssSelector": [".hero .lede", ".tiktok .card p"] }
+      "speakable": { "@type": "SpeakableSpecification", "cssSelector": [".hero .lede", ".qa p"] }
     },
     {
       "@type": "Product",
@@ -203,233 +203,192 @@
 </script>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
-<canvas id="mask-canvas" data-model="assets/models/halo-mask.glb" aria-hidden="true"></canvas>
-<div class="ambient" aria-hidden="true"></div>
+<!-- include:header -->
 
-<header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="./" aria-label="Aphrona Beauty home"><span class="brand-dot" aria-hidden="true"></span>Aphrona</a>
-    <nav class="nav" aria-label="Main">
-      <a href="technology/">Technology</a>
-      <a href="#how">How to use</a>
-      <a href="#devices">Devices</a>
-      <a href="faq/">FAQ</a>
-    </nav>
-    <a class="btn btn-primary btn-sm" href="https://www.aphronabeauty.com/collections/face-masks?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=header">Shop</a>
-  </div>
-</header>
+<section class="trust" aria-label="Store promises">
+  <ul class="wrap">
+    <li>Free US shipping</li>
+    <li>1-year warranty on most devices</li>
+    <li>Houston-based customer service</li>
+    <li>Secure checkout on aphronabeauty.com</li>
+  </ul>
+</section>
 
 <main id="main">
 
-  <section class="hero" data-mask="red" data-mask-x="1.35" data-mask-rot="2.55" data-mask-scale="0.98" aria-labelledby="hero-title">
-    <div class="wrap">
-      <div class="hero-copy">
-        <p class="eyebrow">At-home LED light therapy</p>
-        <h1 id="hero-title">Clinic-style light therapy. <span class="led-word">25 minutes</span> on your couch.</h1>
-        <p class="lede">The Halo mask surrounds your face and neck with 807 red, orange and blue LEDs. Scroll to see what each color does, who it's for, and how to get results.</p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="https://www.aphronabeauty.com/products/led-facial-glowing-mask-halo?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=hero">Shop Halo, $195.99</a>
-          <a class="btn btn-ghost" href="#red">How it works</a>
-        </div>
-        <div class="mask-fallback" role="img" aria-label="Illustration of the Halo LED mask"></div>
-        <ul class="facts">
-          <li><strong>807</strong>LEDs</li>
-          <li><strong>3</strong>wavelengths at once</li>
-          <li><strong>25 min</strong>per cycle</li>
-          <li><strong>0</strong>UV, downtime</li>
-        </ul>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow">The Halo LED Facial Mask</p>
+      <h1 id="hero-title">Red, orange and blue light in one 25-minute ritual.</h1>
+      <p class="lede">Halo fits over your face and neck with 807 LEDs that run together, so there are no modes to choose. Put it on after cleansing, close your eyes, and let it work while you unwind.</p>
+      <div class="cta-row">
+        <a class="btn" href="https://www.aphronabeauty.com/products/led-facial-glowing-mask-halo?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=hero">Shop Halo &middot; $195.99</a>
+        <a class="btn btn-line" href="#light">How the light works</a>
       </div>
+      <ul class="facts">
+        <li><strong>807</strong>LEDs</li>
+        <li><strong>3</strong>colors at once</li>
+        <li><strong>25 min</strong>per session</li>
+        <li><strong>UV-free</strong>no downtime</li>
+      </ul>
+    </div>
+    <div class="hero-media">
+      <img src="https://www.aphronabeauty.com/cdn/shop/files/H75da1d899a714c539d65c281bf7035cbm.jpg?v=1655984600" alt="The white Halo LED mask with its rose-gold visor on a vanity" width="800" height="800" fetchpriority="high">
     </div>
   </section>
 
-  <section class="section tiktok" id="seen-it" data-mask="tri" data-mask-x="1.6" data-mask-rot="3.6" data-mask-scale="0.9" data-mask-opacity="0.25" aria-labelledby="seen-title">
+  <section class="section" id="seen-it" aria-labelledby="seen-title">
     <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">Saw it on TikTok or Instagram?</p>
-        <h2 id="seen-title">The three questions everyone asks first.</h2>
+      <div class="section-head">
+        <p class="eyebrow">Seen it on TikTok or Instagram?</p>
+        <h2 id="seen-title">What people ask us first</h2>
       </div>
-      <div class="cards">
-        <article class="card reveal">
+      <div class="qa">
+        <article>
           <h3>Does it actually work?</h3>
-          <p>Red light has the most research behind it for fine lines and texture, and blue light for breakouts. The catch is consistency: think weeks of regular sessions, not one magic night.</p>
-          <a class="more" href="technology/#evidence">See the evidence</a>
+          <p>Red light has the most research for fine lines and texture, and blue light for breakouts. Results come from regular use, three to five times a week over several weeks.</p>
+          <a class="more" href="technology/#evidence">Read the evidence</a>
         </article>
-        <article class="card reveal">
-          <h3>Does it hurt or burn?</h3>
-          <p>No. LEDs aren't lasers. There's no heat damage, no peeling and no downtime, and Halo is 100% UV-free. Most people use it while scrolling or winding down.</p>
+        <article>
+          <h3>Does it hurt or get hot?</h3>
+          <p>No. LEDs are not lasers, so there's no burning, peeling or recovery time. Halo is UV-free. Most people feel a faint warmth at most.</p>
           <a class="more" href="faq/#safety">Safety questions</a>
         </article>
-        <article class="card reveal">
-          <h3>Why is my face red in the videos?</h3>
-          <p>That's the mask's red LEDs at around the wavelengths studied for collagen. Halo also runs orange and blue in the same cycle, so it looks pink-violet in person.</p>
-          <a class="more" href="#red">See each color</a>
+        <article>
+          <h3>Why does it glow red on camera?</h3>
+          <p>Phone cameras pick up the red LEDs most strongly. In person, Halo's red, orange and blue lights blend into a soft pink-violet.</p>
+          <a class="more" href="#light">See each color</a>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="chapter" id="red" data-mask="red" data-mask-x="1.25" data-mask-rot="3.55" data-mask-scale="1.0" aria-labelledby="red-title">
+  <section class="section sand" id="light" aria-labelledby="light-title">
     <div class="wrap">
-      <div class="chapter-copy reveal">
-        <div class="card">
-          <span class="num">01 / Red light</span>
-          <h2 id="red-title">Red: the <span class="led-word">collagen</span> color.</h2>
-          <p>Red light reaches deeper than any other visible color, into the dermis where collagen is made. Research on red light (around 630 to 660 nm) links it to smoother texture and softer fine lines when used consistently.</p>
-          <dl class="spec">
-            <dt>Best for</dt><dd>Fine lines, texture, overall firmness</dd>
-            <dt>On Halo</dt><dd><span class="swatch" style="background:var(--red)"></span>269 red LEDs</dd>
-          </dl>
-        </div>
+      <div class="section-head">
+        <p class="eyebrow">LED light therapy</p>
+        <h2 id="light-title">Three colors, three jobs</h2>
+        <p>Each color reaches a different depth of the skin. Halo runs all three together in every session.</p>
+      </div>
+      <div class="lights">
+        <article class="light" id="red" style="--c: var(--red)">
+          <figure><img src="https://www.aphronabeauty.com/cdn/shop/files/shutterstock_2146113921-redorg2_535x.jpg?v=1657608315" alt="Red LED light on skin" width="535" height="357" loading="lazy" style="object-position: 0 50%"></figure>
+          <h3>Red light</h3>
+          <p>Reaches deepest of the visible colors, into the layer where collagen is made. Studied for fine lines, texture and firmness.</p>
+          <dl><dt>Wavelength</dt><dd>About 630 to 660 nm</dd><dt>On Halo</dt><dd>269 red LEDs</dd></dl>
+        </article>
+        <article class="light" id="orange" style="--c: var(--orange)">
+          <figure><img src="https://www.aphronabeauty.com/cdn/shop/files/shutterstock_2146113921-redorg2_535x.jpg?v=1657608315" alt="Orange LED light on skin" width="535" height="357" loading="lazy" style="object-position: 100% 50%"></figure>
+          <h3>Orange light</h3>
+          <p>Sits between red and yellow. Used for brightness, a more even-looking tone and calming the redness left after breakouts.</p>
+          <dl><dt>Wavelength</dt><dd>About 590 to 620 nm</dd><dt>On Halo</dt><dd>269 orange LEDs</dd></dl>
+        </article>
+        <article class="light" id="blue" style="--c: var(--blue)">
+          <figure><img src="https://www.aphronabeauty.com/cdn/shop/files/shutterstock_2146113921-prpblu_535x.jpg?v=1657608673" alt="Blue LED light on skin" width="535" height="357" loading="lazy" style="object-position: 100% 50%"></figure>
+          <h3>Blue light</h3>
+          <p>Stays near the surface, where breakout-causing bacteria live. Studied for mild to moderate acne and oily, congested skin.</p>
+          <dl><dt>Wavelength</dt><dd>About 415 nm</dd><dt>On Halo</dt><dd>269 blue LEDs</dd></dl>
+        </article>
+      </div>
+      <p class="note" style="text-align:center;margin-top:28px">Wavelength ranges describe LED therapy in general. <a href="technology/">Read the full technology guide</a>.</p>
+    </div>
+  </section>
+
+  <section class="section" id="halo" aria-labelledby="halo-title">
+    <div class="wrap split">
+      <figure><img src="https://www.aphronabeauty.com/cdn/shop/files/Aphrona.jpg?v=1658762774&amp;width=1200" alt="Halo infographic showing red, blue and orange light depths and full face and neck coverage" width="1200" height="671" loading="lazy"></figure>
+      <div>
+        <p class="eyebrow">Designed for real routines</p>
+        <h2 id="halo-title">One button. Face and neck.</h2>
+        <p>Halo was made for people who want the benefits of LED without learning a settings menu. Tap once to turn it on and again to start the 25-minute cycle. It switches itself off when it's done.</p>
+        <ul>
+          <li>Flexible silicone frame that sits comfortably on most face shapes</li>
+          <li>Patented blackout cover that keeps light out of your eyes</li>
+          <li>Patented magnetic neck cover, so the neck isn't left out</li>
+          <li>Narrow-spectrum, UV-free LEDs</li>
+        </ul>
+        <a class="btn btn-line" href="https://www.aphronabeauty.com/products/led-facial-glowing-mask-halo?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=halo-feature">See Halo in the store</a>
       </div>
     </div>
   </section>
 
-  <section class="chapter" id="orange" data-mask="orange" data-mask-x="1.25" data-mask-rot="2.35" data-mask-tilt="-0.08" data-mask-scale="1.0" aria-labelledby="orange-title">
+  <section class="section sand" id="how" aria-labelledby="how-title">
     <div class="wrap">
-      <div class="chapter-copy reveal">
-        <div class="card">
-          <span class="num">02 / Orange light</span>
-          <h2 id="orange-title">Orange: the <span class="led-word">glow</span> color.</h2>
-          <p>Orange and amber light (roughly 590 to 620 nm) sit between red and yellow. They're used for brightness and a more even-looking tone, and to help skin look calmer after breakouts.</p>
-          <dl class="spec">
-            <dt>Best for</dt><dd>Dullness, uneven tone, post-breakout redness</dd>
-            <dt>On Halo</dt><dd><span class="swatch" style="background:var(--orange)"></span>269 orange LEDs</dd>
-          </dl>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="chapter" id="blue" data-mask="blue" data-mask-x="1.25" data-mask-rot="3.9" data-mask-tilt="0.12" data-mask-scale="1.0" aria-labelledby="blue-title">
-    <div class="wrap">
-      <div class="chapter-copy reveal">
-        <div class="card">
-          <span class="num">03 / Blue light</span>
-          <h2 id="blue-title">Blue: the <span class="led-word">clarifying</span> color.</h2>
-          <p>Blue light (around 415 nm) stays near the surface, where the bacteria linked to breakouts live. Those bacteria contain light-sensitive molecules, and blue light is studied for mild to moderate acne.</p>
-          <dl class="spec">
-            <dt>Best for</dt><dd>Breakouts, oily or congested skin</dd>
-            <dt>On Halo</dt><dd><span class="swatch" style="background:var(--blue)"></span>269 blue LEDs</dd>
-          </dl>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="chapter" id="halo" data-mask="tri" data-mask-x="1.2" data-mask-rot="6.0" data-mask-tilt="-0.1" data-mask-scale="0.95" aria-labelledby="halo-title">
-    <div class="wrap">
-      <div class="chapter-copy reveal">
-        <div class="card">
-          <span class="num">04 / All three at once</span>
-          <h2 id="halo-title">One cycle. <span class="led-word">No settings.</span></h2>
-          <p>Halo runs all 807 LEDs together for 25 minutes, so you don't have to choose a color or plan a schedule. Press the touch pad once to power on and again to start.</p>
-          <p>The flexible silicone frame follows the shape of your face, a patented blackout cover shields your eyes, and a patented magnetic cover extends the light to your neck.</p>
-          <dl class="spec">
-            <dt>Frame</dt><dd>Flexible silicone</dd>
-            <dt>Coverage</dt><dd>Face plus magnetic neck cover</dd>
-            <dt>Light</dt><dd>Narrow-spectrum LEDs, UV-free</dd>
-          </dl>
-          <p class="note">3D model built in Blender from Halo product photos. Proportions are approximate.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section solid" id="how" data-mask="red" data-mask-x="2.6" data-mask-rot="7.4" data-mask-scale="0.9" data-mask-opacity="0" aria-labelledby="how-title">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">How to use it</p>
-        <h2 id="how-title">Three steps, three to five times a week.</h2>
-        <p>LED works by repetition. A steady routine matters more than any single session.</p>
+      <div class="section-head">
+        <p class="eyebrow">How to use Halo</p>
+        <h2 id="how-title">Three steps, three to five times a week</h2>
       </div>
       <ol class="steps">
-        <li class="card reveal"><h3>Cleanse</h3><p>Start with a clean, dry face. Skip makeup, sunscreen and heavy creams so the light reaches your skin.</p></li>
-        <li class="card reveal"><h3>Wear it for 25 minutes</h3><p>Clip on the neck cover if you like, tap to power on, tap again to start. Close your eyes and relax.</p></li>
-        <li class="card reveal"><h3>Follow with skincare</h3><p>Apply serum and moisturizer after. Photograph your skin in the same light every two weeks to see the change.</p></li>
+        <li><h3>Cleanse</h3><p>Start with a clean, dry face. Skip makeup, sunscreen and heavy creams so the light reaches your skin.</p></li>
+        <li><h3>Wear it for 25 minutes</h3><p>Clip on the neck cover if you'd like, tap to power on and tap again to begin. Close your eyes and relax.</p></li>
+        <li><h3>Finish with skincare</h3><p>Follow with your serum and moisturizer. Take a photo in the same light every two weeks to see your progress.</p></li>
       </ol>
-      <p class="note reveal">Typical timeline: brighter, calmer-looking skin in a few weeks; fine lines and texture after 8 to 12 weeks of regular use.</p>
+      <p class="note" style="text-align:center;margin-top:32px">Most people notice brighter, calmer-looking skin within a few weeks. Fine lines and texture take 8 to 12 weeks of regular use.</p>
     </div>
   </section>
 
-  <section class="section solid-2" id="devices" data-mask="red" data-mask-x="2.6" data-mask-opacity="0" aria-labelledby="devices-title">
+  <section class="section" id="devices" aria-labelledby="devices-title">
     <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">The lineup</p>
-        <h2 id="devices-title">Every device, and what it's for.</h2>
-        <p>All purchases happen in our official store, with free shipping in the US.</p>
+      <div class="section-head">
+        <p class="eyebrow">The collection</p>
+        <h2 id="devices-title">At-home beauty devices</h2>
+        <p>Every device ships free in the US from our official store.</p>
       </div>
       <div class="products">
-        <article class="product featured reveal" aria-labelledby="p-halo">
-          <figure><img src="https://www.aphronabeauty.com/cdn/shop/files/61O3u19781L._SL1254.jpg?v=1780946275&amp;width=800" alt="Halo LED Facial Glowing Mask in white with neck cover" width="800" height="800" loading="lazy" decoding="async"></figure>
-          <div class="body">
-            <div class="tags"><span class="tag">Red + orange + blue</span><span class="tag">807 LEDs</span><span class="tag">Face + neck</span></div>
-            <h3 id="p-halo">Halo LED Facial Glowing Mask</h3>
-            <p>Our most complete mask. Three wavelengths in one hands-free 25-minute cycle, with a patented eye cover and magnetic neck cover.</p>
-            <p class="price">$195.99</p>
-            <a class="btn btn-primary" href="https://www.aphronabeauty.com/products/led-facial-glowing-mask-halo?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=devices">View Halo in the store</a>
-          </div>
+        <article class="product" aria-labelledby="p-halo">
+          <figure><img src="https://www.aphronabeauty.com/cdn/shop/files/61O3u19781L._SL1254.jpg?v=1780946275&amp;width=600" alt="Halo LED Facial Glowing Mask with neck cover" width="600" height="600" loading="lazy"></figure>
+          <h3 id="p-halo">Halo LED Facial Glowing Mask</h3>
+          <p class="for">Red, orange and blue together. Fine lines, tone and breakouts in one routine.</p>
+          <p class="price">$195.99</p>
+          <a class="btn" href="https://www.aphronabeauty.com/products/led-facial-glowing-mask-halo?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=devices">Shop now</a>
         </article>
-        <article class="product reveal" aria-labelledby="p-pro">
-          <figure><img src="https://www.aphronabeauty.com/cdn/shop/products/7colormaskPDP.jpg?v=1655682968&amp;width=600" alt="Moonlight Pro 7-color LED face mask" width="600" height="600" loading="lazy" decoding="async"></figure>
-          <div class="body">
-            <div class="tags"><span class="tag">7 colors</span><span class="tag">150 LEDs</span></div>
-            <h3 id="p-pro">Moonlight Pro, 7-Color</h3>
-            <p>Pick a color per concern, including green for uneven tone. Adjustable brightness and time.</p>
-            <p class="price">$189.99</p>
-            <a class="btn btn-ghost" href="https://www.aphronabeauty.com/products/led-facial-skin-care-mask-pro?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=devices">View in store</a>
-          </div>
+        <article class="product" aria-labelledby="p-pro">
+          <figure><img src="https://www.aphronabeauty.com/cdn/shop/products/7colormaskPDP.jpg?v=1655682968&amp;width=600" alt="Moonlight Pro 7-color LED face mask" width="600" height="600" loading="lazy"></figure>
+          <h3 id="p-pro">Moonlight Pro 7-Color Mask</h3>
+          <p class="for">Choose a color per concern, with adjustable brightness and time.</p>
+          <p class="price">$189.99</p>
+          <a class="btn btn-line" href="https://www.aphronabeauty.com/products/led-facial-skin-care-mask-pro?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=devices">Shop now</a>
         </article>
-        <article class="product reveal" aria-labelledby="p-moon">
-          <figure><img src="https://www.aphronabeauty.com/cdn/shop/files/3be79d885bebb5707c85ddcedd76de5a.jpg?v=1780945294&amp;width=600" alt="Moonlight 3-color LED face mask" width="600" height="600" loading="lazy" decoding="async"></figure>
-          <div class="body">
-            <div class="tags"><span class="tag">Red, blue, green</span><span class="tag">150 LEDs</span></div>
-            <h3 id="p-moon">Moonlight, 3-Color</h3>
-            <p>The essentials: red at 630 nm, blue at 415 nm and green at 520 nm, with auto shut-off.</p>
-            <p class="price">$179.99</p>
-            <a class="btn btn-ghost" href="https://www.aphronabeauty.com/products/moonlight-face-masks-2?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=devices">View in store</a>
-          </div>
+        <article class="product" aria-labelledby="p-moon">
+          <figure><img src="https://www.aphronabeauty.com/cdn/shop/files/3be79d885bebb5707c85ddcedd76de5a.jpg?v=1780945294&amp;width=600" alt="Moonlight 3-color LED face mask" width="600" height="600" loading="lazy"></figure>
+          <h3 id="p-moon">Moonlight 3-Color Mask</h3>
+          <p class="for">The essentials: red, blue and green, with auto shut-off.</p>
+          <p class="price">$179.99</p>
+          <a class="btn btn-line" href="https://www.aphronabeauty.com/products/moonlight-face-masks-2?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=devices">Shop now</a>
         </article>
-        <article class="product reveal" aria-labelledby="p-nova">
-          <figure><img src="https://www.aphronabeauty.com/cdn/shop/files/Weixin_Image_20250731095448.jpg?v=1753973878&amp;width=600" alt="Avorla SuperNova radio frequency skin tightening device" width="600" height="600" loading="lazy" decoding="async"></figure>
-          <div class="body">
-            <div class="tags"><span class="tag">Radio frequency</span><span class="tag">Face + body</span></div>
-            <h3 id="p-nova">Avorla SuperNova</h3>
-            <p>Radio frequency warmth and massage for firmness on the face, jawline, neck, hands and body. Two probe sizes.</p>
-            <p class="price">$369.99</p>
-            <a class="btn btn-ghost" href="https://www.aphronabeauty.com/products/supernova-body-facial-tightening-treatment?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=devices">View in store</a>
-          </div>
+        <article class="product" aria-labelledby="p-nova">
+          <figure><img src="https://www.aphronabeauty.com/cdn/shop/files/Weixin_Image_20250731095448.jpg?v=1753973878&amp;width=600" alt="Avorla SuperNova radio frequency skin tightening device" width="600" height="600" loading="lazy"></figure>
+          <h3 id="p-nova">Avorla&reg; SuperNova</h3>
+          <p class="for">Radio frequency warmth for firmness on the face, neck and body.</p>
+          <p class="price">$369.99</p>
+          <a class="btn btn-line" href="https://www.aphronabeauty.com/products/supernova-body-facial-tightening-treatment?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=devices">Shop now</a>
         </article>
-        <article class="product reveal" aria-labelledby="p-zen">
-          <figure><img src="https://www.aphronabeauty.com/cdn/shop/products/3_ba6fe8b5-7459-4edb-b19b-616d4dcd6a6a.png?v=1657866171&amp;width=600" alt="Avorla Zenith facial skin tightening device" width="600" height="600" loading="lazy" decoding="async"></figure>
-          <div class="body">
-            <div class="tags"><span class="tag">High frequency</span><span class="tag">Red + blue LED</span><span class="tag">Vibration</span></div>
-            <h3 id="p-zen">Avorla Zenith</h3>
-            <p>A face-sized multitasker: warmth, red and blue light and micro-vibration in a three-minute routine.</p>
-            <p class="price">$169.99</p>
-            <a class="btn btn-ghost" href="https://www.aphronabeauty.com/products/zenith-med-spa-facial-tightening-treatment?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=devices">View in store</a>
-          </div>
+        <article class="product" aria-labelledby="p-zen">
+          <figure><img src="https://www.aphronabeauty.com/cdn/shop/products/3_ba6fe8b5-7459-4edb-b19b-616d4dcd6a6a.png?v=1657866171&amp;width=600" alt="Avorla Zenith facial skin tightening device" width="600" height="600" loading="lazy"></figure>
+          <h3 id="p-zen">Avorla&reg; Zenith</h3>
+          <p class="for">Warmth, red and blue LED and micro-vibration in a three-minute routine.</p>
+          <p class="price">$169.99</p>
+          <span class="stock">Currently sold out</span>
+          <a class="btn btn-line" href="https://www.aphronabeauty.com/products/zenith-med-spa-facial-tightening-treatment?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=devices">View in store</a>
         </article>
-        <article class="product reveal" aria-labelledby="p-wand">
-          <figure><img src="https://www.aphronabeauty.com/cdn/shop/products/Capture.jpg?v=1709839512&amp;width=600" alt="Avorla Golden Glow LED facial wand" width="600" height="600" loading="lazy" decoding="async"></figure>
-          <div class="body">
-            <div class="tags"><span class="tag">Red + infrared</span><span class="tag">Warming head</span></div>
-            <h3 id="p-wand">Avorla Golden Glow Wand</h3>
-            <p>Targeted red and infrared light with gentle warmth for eyes, smile lines and forehead. Rechargeable for travel.</p>
-            <p class="price">$49.99</p>
-            <a class="btn btn-ghost" href="https://www.aphronabeauty.com/products/led-light-therapy-multi-benefit-facial-wand?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=devices">View in store</a>
-          </div>
+        <article class="product" aria-labelledby="p-wand">
+          <figure><img src="https://www.aphronabeauty.com/cdn/shop/products/Capture.jpg?v=1709839512&amp;width=600" alt="Avorla Golden Glow LED facial wand" width="600" height="600" loading="lazy"></figure>
+          <h3 id="p-wand">Avorla&reg; Golden Glow Wand</h3>
+          <p class="for">Red and infrared light with gentle warmth for eyes, smile lines and forehead.</p>
+          <p class="price">$49.99</p>
+          <span class="stock">Currently sold out</span>
+          <a class="btn btn-line" href="https://www.aphronabeauty.com/products/led-light-therapy-multi-benefit-facial-wand?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=devices">View in store</a>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="section solid" id="find" data-mask="red" data-mask-x="2.6" data-mask-opacity="0" aria-labelledby="find-title">
+  <section class="section sand" id="find" aria-labelledby="find-title">
     <div class="wrap chooser">
-      <div class="reveal">
+      <div>
         <p class="eyebrow">Find your device</p>
-        <h2 id="find-title">What do you want to change most?</h2>
-        <p class="lede" style="margin:18px 0 28px">Pick one. We'll point you to the device built for it, and tell you honestly when a different one fits better.</p>
+        <h2 id="find-title">What would you most like to change?</h2>
+        <p class="lede" style="margin-bottom:24px">Choose one and we'll suggest the device made for it. If another one suits you better, we'll say so.</p>
         <div class="choices" role="group" aria-label="Skin concern">
           <button class="choice" type="button" data-pick="lines" aria-pressed="false">Fine lines</button>
           <button class="choice" type="button" data-pick="breakouts" aria-pressed="false">Breakouts</button>
@@ -438,21 +397,21 @@
           <button class="choice" type="button" data-pick="hair" aria-pressed="false">Thinning hair</button>
         </div>
       </div>
-      <div class="card result reveal" id="chooser-result" aria-live="polite">
-        <p class="eyebrow">Our pick for you</p>
-        <h3>Choose a concern to see a recommendation.</h3>
-        <p class="why">Not sure? Most people start with Halo: it covers fine lines, tone and breakouts in a single routine.</p>
+      <div class="result" id="chooser-result" aria-live="polite">
+        <p class="eyebrow">Our suggestion</p>
+        <h3>Pick a concern to see a recommendation.</h3>
+        <p class="why">Not sure where to start? Most customers begin with Halo, which covers fine lines, tone and breakouts in a single routine.</p>
       </div>
     </div>
   </section>
 
-  <section class="section solid-2" id="compare" data-mask="red" data-mask-x="2.6" data-mask-opacity="0" aria-labelledby="compare-title">
+  <section class="section" id="compare" aria-labelledby="compare-title">
     <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">Compare masks</p>
+      <div class="section-head">
+        <p class="eyebrow">Compare our masks</p>
         <h2 id="compare-title">Halo, Moonlight Pro or Moonlight?</h2>
       </div>
-      <div class="table-wrap reveal">
+      <div class="table-wrap">
         <table>
           <caption class="skip">Comparison of Aphrona LED face masks</caption>
           <thead>
@@ -460,23 +419,23 @@
           </thead>
           <tbody>
             <tr><th scope="row">Price</th><td>$195.99</td><td>$189.99</td><td>$179.99</td></tr>
-            <tr><th scope="row">Colors</th><td>Red, orange, blue (all at once)</td><td>7, chosen per session</td><td>Red, blue, green</td></tr>
+            <tr><th scope="row">Colors</th><td>Red, orange, blue (together)</td><td>7, chosen per session</td><td>Red, blue, green</td></tr>
             <tr><th scope="row">LEDs</th><td>807</td><td>150</td><td>150</td></tr>
-            <tr><th scope="row">Session</th><td>25 min, fixed cycle</td><td>About 15 to 20 min, adjustable</td><td>About 15 to 20 min, adjustable</td></tr>
+            <tr><th scope="row">Session</th><td>25 min, fixed</td><td>About 15 to 20 min, adjustable</td><td>About 15 to 20 min, adjustable</td></tr>
             <tr><th scope="row">Neck coverage</th><td>Yes, magnetic cover</td><td>No</td><td>No</td></tr>
-            <tr><th scope="row">Frame</th><td>Flexible silicone</td><td>Hard shell, pearl-coated</td><td>Hard shell, pearl-coated</td></tr>
-            <tr><th scope="row">Best for</th><td>One simple routine for several concerns</td><td>Targeting tone and specific concerns</td><td>Core red and blue on a budget</td></tr>
+            <tr><th scope="row">Frame</th><td>Flexible silicone</td><td>Hard shell, pearl finish</td><td>Hard shell, pearl finish</td></tr>
+            <tr><th scope="row">Best for</th><td>One easy routine for several concerns</td><td>Targeting one concern at a time</td><td>Core red and blue at a lower price</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <section class="section solid" id="faq" data-mask="red" data-mask-x="2.6" data-mask-opacity="0" aria-labelledby="faq-title">
+  <section class="section sand" id="faq" aria-labelledby="faq-title">
     <div class="wrap">
-      <div class="section-head reveal">
+      <div class="section-head">
         <p class="eyebrow">FAQ</p>
-        <h2 id="faq-title">Straight answers.</h2>
+        <h2 id="faq-title">Frequently asked questions</h2>
         <p>More in the <a href="faq/">full FAQ</a> and the <a href="technology/">technology guide</a>.</p>
       </div>
       <div class="faq">
@@ -491,56 +450,18 @@
     </div>
   </section>
 
-  <section class="cta-band" data-mask="tri" data-mask-x="0" data-mask-y="0" data-mask-rot="9.0" data-mask-scale="0.85" data-mask-opacity="0.35" aria-labelledby="cta-title">
+  <section class="cta-band" aria-labelledby="cta-title">
     <div class="wrap">
-      <h2 id="cta-title">Your 25 minutes starts tonight.</h2>
-      <p>Free shipping in the US. Order from the official Aphrona Beauty store.</p>
+      <h2 id="cta-title">Illuminate. Restore. Transform.</h2>
+      <p>Free US shipping from the official Aphrona Beauty store.</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="https://www.aphronabeauty.com/products/led-facial-glowing-mask-halo?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=footer-cta">Shop Halo, $195.99</a>
-        <a class="btn btn-ghost" href="https://www.aphronabeauty.com/collections/all?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=footer-cta">Browse all devices</a>
+        <a class="btn" href="https://www.aphronabeauty.com/products/led-facial-glowing-mask-halo?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=footer-cta">Shop Halo &middot; $195.99</a>
+        <a class="btn btn-line" href="https://www.aphronabeauty.com/collections/all?utm_source=aphrona-learn&amp;utm_medium=landing&amp;utm_campaign=footer-cta">Browse all devices</a>
       </div>
     </div>
   </section>
 </main>
 
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="foot-grid">
-      <div>
-        <a class="brand" href="./"><span class="brand-dot" aria-hidden="true"></span>Aphrona</a>
-        <p style="margin-top:14px">Illuminate. Restore. Transform. At-home light therapy devices by Daman Beauty LLC, Houston, Texas.</p>
-      </div>
-      <div>
-        <h3>Learn</h3>
-        <ul>
-          <li><a href="technology/">LED technology guide</a></li>
-          <li><a href="faq/">FAQ</a></li>
-          <li><a href="#compare">Compare masks</a></li>
-          <li><a href="llms.txt">Summary for AI assistants</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3>Shop</h3>
-        <ul>
-          <li><a href="https://www.aphronabeauty.com/collections/face-masks">LED face masks</a></li>
-          <li><a href="https://www.aphronabeauty.com/collections/face-wands">Face wands</a></li>
-          <li><a href="https://www.aphronabeauty.com/collections/skin-tightening">Skin tightening</a></li>
-          <li><a href="https://www.aphronabeauty.com/collections/hair-regrowth">Hair regrowth</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3>Help</h3>
-        <ul>
-          <li><a href="https://www.aphronabeauty.com/pages/contact-us">Contact us</a></li>
-          <li><a href="https://www.aphronabeauty.com/pages/shipping-policy-2">Shipping</a></li>
-          <li><a href="https://www.aphronabeauty.com/pages/return-policy-2">Returns</a></li>
-          <li><a href="https://www.aphronabeauty.com/pages/warranty-policy-2">Warranty</a></li>
-          <li><a href="https://www.instagram.com/aphronabeauty/" rel="me">Instagram</a></li>
-        </ul>
-      </div>
-    </div>
-    <p class="disclaimer">These statements describe cosmetic light therapy and are not intended to diagnose, treat, cure or prevent any disease. Individual results vary. Talk to a doctor before use if you are pregnant, have a light-sensitive condition, or take photosensitizing medication. Wavelength ranges on this page describe LED therapy in general unless a device value is stated.</p>
-  </div>
-</footer>
+<!-- include:footer -->
 </body>
 </html>

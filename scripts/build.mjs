@@ -1,10 +1,9 @@
-// Static build: bundles the 3D mask, copies /site to /dist, fills in the
-// site URL, writes sitemap.xml and checks every JSON-LD block parses.
+// Static build: copies /site to /dist, inlines the shared header and footer,
+// fills in the site URL, writes sitemap.xml and checks every JSON-LD block parses.
 //
 //   SITE_URL=https://learn.aphronabeauty.com npm run build
-import { build } from 'esbuild';
 import { cp, readdir, readFile, writeFile, rm, stat } from 'node:fs/promises';
-import { join, relative } from 'node:path';
+import { join, relative, dirname } from 'node:path';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const SITE = join(ROOT, 'site');
@@ -15,11 +14,11 @@ const TODAY = new Date().toISOString().slice(0, 10);
 await rm(DIST, { recursive: true, force: true });
 await cp(SITE, DIST, { recursive: true });
 
-await build({
-  entryPoints: [join(ROOT, 'src/mask.js')],
-  bundle: true, minify: true, format: 'esm', target: 'es2020',
-  outfile: join(DIST, 'assets/mask.js'), legalComments: 'none',
-});
+const PARTIALS = {
+  header: await readFile(join(SITE, '_partials/header.html'), 'utf8'),
+  footer: await readFile(join(SITE, '_partials/footer.html'), 'utf8'),
+};
+await rm(join(DIST, '_partials'), { recursive: true, force: true });
 
 async function walk(dir) {
   const out = [];
@@ -35,6 +34,11 @@ const pages = [];
 for (const f of files) {
   if (!/\.(html|txt|xml|webmanifest|json)$/.test(f)) continue;
   let s = await readFile(f, 'utf8');
+  if (f.endsWith('.html')) {
+    const depth = relative(DIST, dirname(f)).split('/').filter(Boolean).length;
+    const root = depth ? '../'.repeat(depth) : './';
+    s = s.replace(/<!-- include:(\w+) -->/g, (_, n) => PARTIALS[n].replaceAll('{{ROOT}}', root));
+  }
   s = s.replaceAll('{{SITE_URL}}', SITE_URL).replaceAll('{{BUILD_DATE}}', TODAY);
   await writeFile(f, s);
   if (f.endsWith('.html') && !/<meta name="robots" content="noindex/.test(s)) {
@@ -56,4 +60,4 @@ await writeFile(join(DIST, 'sitemap.xml'), sitemap);
 
 const size = async (p) => ((await stat(join(DIST, p))).size / 1024).toFixed(1) + ' KB';
 console.log(`Built ${pages.length} pages for ${SITE_URL}`);
-console.log(`mask.js ${await size('assets/mask.js')}, styles.css ${await size('assets/styles.css')}`);
+console.log(`styles.css ${await size('assets/styles.css')}, studio.js ${await size('assets/studio.js')}`);
