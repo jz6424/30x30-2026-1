@@ -1,21 +1,11 @@
-// Small, dependency-free page behaviour. The 3D mask loads after first paint
-// so it never blocks the text, which is what search engines and AI crawlers read.
+// Small, dependency-free page behaviour. All content is static HTML, so search
+// engines and AI crawlers read it without running any script.
 document.documentElement.classList.remove('no-js');
 
-// Reveal-on-scroll
-const io = 'IntersectionObserver' in window
-  ? new IntersectionObserver((entries) => {
-      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-    }, { rootMargin: '0px 0px -10% 0px' })
-  : null;
-document.querySelectorAll('.reveal').forEach((el) => (io ? io.observe(el) : el.classList.add('in')));
-
-// Lazy-load the 3D mask once the page is idle
-if (document.getElementById('mask-canvas')) {
-  const load = () => import('./mask.js').catch(() => document.documentElement.classList.add('no-webgl'));
-  const idle = window.requestIdleCallback || ((cb) => setTimeout(cb, 200));
-  if (document.readyState === 'complete') idle(load);
-  else addEventListener('load', () => idle(load), { once: true });
+// Image placeholders: drop the shimmer once each photo has loaded (or failed).
+for (const img of document.querySelectorAll('.img-frame img')) {
+  const done = () => img.closest('.img-frame').classList.add('loaded');
+  if (img.complete) done(); else { img.addEventListener('load', done, { once: true }); img.addEventListener('error', done, { once: true }); }
 }
 
 // "Find your device" chooser
@@ -60,13 +50,16 @@ document.querySelectorAll('.choice').forEach((btn) => {
     const p = PICKS[btn.dataset.pick];
     if (!p || !result) return;
     const camp = `chooser-${btn.dataset.pick}`;
+    result.classList.remove('updated');
+    void result.offsetWidth; // restart the entrance animation
     result.innerHTML = `
-      <p class="eyebrow">Our pick for you</p>
       <h3>${p.name}</h3>
       <p class="why">${p.why}</p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="${STORE}${p.url}${utm(camp)}">${p.price ? `Shop now, ${p.price}` : 'Browse the range'}</a>
+        <a class="btn btn-primary" href="${STORE}${p.url}${utm(camp)}">${p.price ? `Shop for ${p.price}` : 'Browse the range'}</a>
+        ${p.alt ? `<a class="text-link" href="${STORE}${p.alt.url}${utm(camp + '-alt')}">Or the ${p.alt.name}</a>` : ''}
       </div>
-      ${p.alt ? `<p class="note">Also consider: <a href="${STORE}${p.alt.url}${utm(camp + '-alt')}">${p.alt.name}</a>. ${p.alt.why}</p>` : ''}`;
+      ${p.alt ? `<p class="note">${p.alt.why}</p>` : ''}`;
+    result.classList.add('updated');
   });
 });
