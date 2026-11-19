@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -16,76 +16,75 @@
 <body class="studio">
 <!-- include:header -->
 
-<main id="main">
-  <section class="studio-intro">
-    <div class="wrap">
-      <p class="eyebrow">Aphrona Content Studio &middot; prototype</p>
-      <h1>One product spec. Every channel. Approved by a person.</h1>
-      <p class="lede">Choose a device or paste a spec. The studio drafts a TikTok script, an Instagram carousel and a search-ready website article in Aphrona's voice, checks each one against the brand's claim rules, and only lets approved pieces out the door.</p>
-      <ol class="flow" aria-label="Workflow">
-        <li><strong>Input</strong>Product spec</li>
-        <li><strong>Draft</strong>Three channels</li>
-        <li><strong>Check</strong>Claims, voice, SEO</li>
-        <li><strong>Approve</strong>Human review</li>
-        <li><strong>Publish</strong>Export with tracking</li>
-      </ol>
-    </div>
-  </section>
+<main id="main" class="wrap studio-app">
+  <aside class="sidebar" aria-labelledby="input-title">
+    <h1 id="input-title">Turn one product spec into three channels of content</h1>
+    <p class="intro">Drafts follow Aphrona's voice, get checked against its claim rules, and can't be exported until a person approves them.</p>
 
-  <section class="studio-grid wrap">
-    <div class="panel input-panel">
-      <h2>1. Product input</h2>
-      <label for="preset">Start from a device</label>
-      <select id="preset"></select>
-      <label for="spec">Product spec <span class="hint">(edit freely; one fact per "- " line)</span></label>
-      <textarea id="spec" rows="14" spellcheck="true"></textarea>
-      <label for="angle">Content angle</label>
-      <select id="angle"></select>
-      <fieldset>
-        <legend>Channels</legend>
-        <label class="check"><input type="checkbox" id="ch-tiktok" checked> TikTok script</label>
-        <label class="check"><input type="checkbox" id="ch-instagram" checked> Instagram post</label>
-        <label class="check"><input type="checkbox" id="ch-website" checked> Website article + FAQ schema</label>
-      </fieldset>
-      <details class="engine">
-        <summary>Writing engine</summary>
-        <label for="engine">Engine</label>
-        <select id="engine">
-          <option value="demo">Built-in brand engine (offline, instant)</option>
-          <option value="ai">Claude (needs an API key)</option>
-        </select>
-        <div id="ai-settings" hidden>
-          <label for="api-key">Anthropic API key <span class="hint">(kept in this tab only)</span></label>
-          <input id="api-key" type="password" autocomplete="off" placeholder="sk-ant-…">
-          <label for="api-model">Model</label>
-          <input id="api-model" type="text" value="claude-sonnet-5-5">
-        </div>
-      </details>
-      <button class="btn btn-wide" id="generate" type="button">Write drafts</button>
-      <p id="gen-status" class="gen-status" role="status" aria-live="polite"></p>
-    </div>
-
-    <aside class="panel brand-panel" aria-labelledby="kit-title">
-      <h2 id="kit-title">Brand kit</h2>
-      <p class="hint">Every draft is written from, and checked against, these rules.</p>
-      <p id="voice-summary"></p>
-      <h3>Always</h3>
-      <ul id="voice-do"></ul>
-      <h3>Never</h3>
-      <ul id="voice-dont"></ul>
-      <h3>Reviewer</h3>
-      <label for="reviewer" class="skip">Reviewer name</label>
-      <input id="reviewer" type="text" placeholder="Your name" value="">
-    </aside>
-  </section>
-
-  <section class="wrap" id="drafts" aria-labelledby="drafts-title">
-    <div class="drafts-head">
-      <h2 id="drafts-title">2. Review and approve</h2>
-      <div class="export">
-        <span id="export-count"></span>
-        <button class="btn btn-sm" id="export-btn" type="button" disabled>Download approved pack</button>
+    <div class="product-pick">
+      <figure class="thumb img-frame"><img id="product-img" src="" alt="" width="96" height="96"></figure>
+      <div>
+        <label for="preset">Product</label>
+        <select id="preset"></select>
       </div>
+    </div>
+
+    <details class="spec-box">
+      <summary>Product spec <span class="hint">edit or paste your own</span></summary>
+      <textarea id="spec" rows="12" spellcheck="true" aria-label="Product spec"></textarea>
+    </details>
+
+    <label for="angle">Angle</label>
+    <select id="angle"></select>
+
+    <fieldset class="channels">
+      <legend>Channels</legend>
+      <label class="check"><input type="checkbox" id="ch-tiktok" checked> TikTok script</label>
+      <label class="check"><input type="checkbox" id="ch-instagram" checked> Instagram carousel</label>
+      <label class="check"><input type="checkbox" id="ch-website" checked> Website article and FAQ schema</label>
+    </fieldset>
+
+    <button class="btn btn-primary btn-lg btn-wide" id="generate" type="button"><span class="spinner" aria-hidden="true"></span><span class="label">Write drafts</span></button>
+    <p id="gen-status" class="gen-status" role="status" aria-live="polite"></p>
+
+    <details class="more-box">
+      <summary>Brand rules</summary>
+      <p id="voice-summary"></p>
+      <h2>Always</h2>
+      <ul id="voice-do"></ul>
+      <h2>Never</h2>
+      <ul id="voice-dont"></ul>
+    </details>
+
+    <details class="more-box">
+      <summary>Writing engine and reviewer</summary>
+      <label for="reviewer">Reviewer name</label>
+      <input id="reviewer" type="text" placeholder="Your name">
+      <label for="engine">Engine</label>
+      <select id="engine">
+        <option value="demo">Built-in brand engine (works offline)</option>
+        <option value="ai">Claude (needs an API key)</option>
+      </select>
+      <div id="ai-settings" hidden>
+        <label for="api-key">Anthropic API key <span class="hint">kept in this tab only</span></label>
+        <input id="api-key" type="password" autocomplete="off" placeholder="sk-ant-…">
+        <label for="api-model">Model</label>
+        <input id="api-model" type="text" value="claude-sonnet-5-5">
+      </div>
+    </details>
+  </aside>
+
+  <section class="workspace" id="drafts" aria-labelledby="drafts-title">
+    <div class="drafts-head">
+      <h2 id="drafts-title">Review and approve</h2>
+      <div class="export">
+        <span id="export-count" class="count"></span>
+        <button class="btn btn-sm" id="export-btn" type="button" disabled>Download approved</button>
+      </div>
+    </div>
+
+    <div class="empty" id="empty">
+      <p>Pick a product and press <strong>Write drafts</strong>. Each draft appears here with its brand check beside it.</p>
     </div>
 
     <article class="draft" data-channel="tiktok" hidden>
@@ -96,16 +95,16 @@
         <div class="checks"></div>
       </div>
       <footer>
-        <input class="note-input" type="text" placeholder="What should change? e.g. make the hook shorter" aria-label="Change request for TikTok script">
-        <button class="btn btn-sm btn-line" data-act="changes" type="button">Request changes</button>
-        <button class="btn btn-sm btn-line" data-act="edit" type="button">Edit</button>
-        <button class="btn btn-sm btn-line" data-act="copy" type="button">Copy</button>
-        <button class="btn btn-sm" data-act="approve" type="button">Approve</button>
+        <input class="note-input" type="text" placeholder="What should change? For example: shorter hook" aria-label="Change request for TikTok script">
+        <button class="btn btn-sm" data-act="changes" type="button">Request changes</button>
+        <button class="btn btn-sm" data-act="edit" type="button">Edit</button>
+        <button class="btn btn-sm" data-act="copy" type="button">Copy</button>
+        <button class="btn btn-sm btn-primary" data-act="approve" type="button">Approve</button>
       </footer>
     </article>
 
     <article class="draft" data-channel="instagram" hidden>
-      <header><h3>Instagram post</h3><span class="status"></span></header>
+      <header><h3>Instagram carousel</h3><span class="status"></span></header>
       <div class="draft-body">
         <div class="preview"></div>
         <textarea class="editor" aria-label="Edit Instagram post"></textarea>
@@ -113,10 +112,10 @@
       </div>
       <footer>
         <input class="note-input" type="text" placeholder="What should change?" aria-label="Change request for Instagram post">
-        <button class="btn btn-sm btn-line" data-act="changes" type="button">Request changes</button>
-        <button class="btn btn-sm btn-line" data-act="edit" type="button">Edit</button>
-        <button class="btn btn-sm btn-line" data-act="copy" type="button">Copy</button>
-        <button class="btn btn-sm" data-act="approve" type="button">Approve</button>
+        <button class="btn btn-sm" data-act="changes" type="button">Request changes</button>
+        <button class="btn btn-sm" data-act="edit" type="button">Edit</button>
+        <button class="btn btn-sm" data-act="copy" type="button">Copy</button>
+        <button class="btn btn-sm btn-primary" data-act="approve" type="button">Approve</button>
       </footer>
     </article>
 
@@ -128,23 +127,23 @@
         <div class="checks"></div>
       </div>
       <details class="schema" hidden>
-        <summary>Structured data for Google and AI assistants (Article + FAQPage)</summary>
+        <summary>Structured data for Google and AI assistants</summary>
         <pre></pre>
-        <button class="btn btn-sm btn-line" data-act="copy-schema" type="button">Copy schema</button>
+        <button class="btn btn-sm" data-act="copy-schema" type="button">Copy schema</button>
       </details>
       <footer>
         <input class="note-input" type="text" placeholder="What should change?" aria-label="Change request for website article">
-        <button class="btn btn-sm btn-line" data-act="changes" type="button">Request changes</button>
-        <button class="btn btn-sm btn-line" data-act="edit" type="button">Edit</button>
-        <button class="btn btn-sm btn-line" data-act="copy" type="button">Copy</button>
-        <button class="btn btn-sm" data-act="approve" type="button">Approve</button>
+        <button class="btn btn-sm" data-act="changes" type="button">Request changes</button>
+        <button class="btn btn-sm" data-act="edit" type="button">Edit</button>
+        <button class="btn btn-sm" data-act="copy" type="button">Copy</button>
+        <button class="btn btn-sm btn-primary" data-act="approve" type="button">Approve</button>
       </footer>
     </article>
 
-    <div class="log-wrap">
-      <h3>Review log</h3>
+    <details class="log-wrap">
+      <summary>Review log <span id="log-count" class="count"></span></summary>
       <ol id="log" class="log"></ol>
-    </div>
+    </details>
   </section>
 </main>
 

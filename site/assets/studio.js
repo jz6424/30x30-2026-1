@@ -342,6 +342,13 @@ function md2html(md) {
   return html;
 }
 
+function igMock(md) {
+  const first = (md.match(/^1\. (.+)$/m) || [, ''])[1];
+  const img = state.product?.image;
+  if (!img || !first) return '';
+  return `<div class="ig-mock"><div class="ig-slide"><img src="${esc(img)}" alt="" loading="lazy"><p>${esc(first)}</p></div><p class="note">Slide 1 preview with the product photo. The remaining slides and caption are below.</p></div>`;
+}
+
 const STATUS_LABEL = { draft: 'Needs review', approved: 'Approved', changes: 'Changes requested' };
 
 function renderChannel(ch) {
@@ -353,14 +360,21 @@ function renderChannel(ch) {
   const blocks = results.filter((r) => r.level === 'block').length;
   const warns = results.filter((r) => r.level === 'warn').length;
   const st = state.status[ch] || 'draft';
-  $('.status', card).textContent = STATUS_LABEL[st];
-  $('.status', card).dataset.state = st;
-  if (!card.classList.contains('editing')) $('.preview', card).innerHTML = md2html(md);
-  $('.checks', card).innerHTML = `
-    <p class="checks-sum">${blocks ? `${blocks} must fix` : 'Nothing blocking'} &middot; ${warns} suggestion${warns === 1 ? '' : 's'}</p>
-    <ul>${results.map((r) => `<li class="${r.level}"><span>${{ block: 'Fix', warn: 'Check', pass: 'OK' }[r.level]}</span>${esc(r.text)}</li>`).join('')}</ul>`;
+  const chip = $('.status', card);
+  if (chip.dataset.state !== st) { chip.classList.remove('pop'); void chip.offsetWidth; chip.classList.add('pop'); }
+  chip.textContent = STATUS_LABEL[st];
+  chip.dataset.state = st;
+  if (!card.classList.contains('editing')) $('.preview', card).innerHTML = (ch === 'instagram' ? igMock(md) : '') + md2html(md.replace(/^# .*\n+/, ''));
+  const sig = results.map((r) => r.level + r.text).join('|');
+  if ($('.checks', card).dataset.sig !== sig) {
+    $('.checks', card).dataset.sig = sig;
+    $('.checks', card).innerHTML = `
+    <p class="checks-sum${blocks ? ' blocked' : ''}">${blocks ? `${blocks} to fix before approval` : 'Ready to approve'}${warns ? ` &middot; ${warns} suggestion${warns === 1 ? '' : 's'}` : ''}</p>
+    <ul>${results.map((r) => `<li class="${r.level}"><span class="sr-only">${{ block: 'Must fix', warn: 'Suggestion', pass: 'Passed' }[r.level]}: </span>${esc(r.text)}</li>`).join('')}</ul>`;
+  }
   const approve = $('[data-act="approve"]', card);
   approve.disabled = blocks > 0 || st === 'approved';
+  approve.textContent = st === 'approved' ? 'Approved' : 'Approve';
   approve.title = blocks ? 'Fix the items marked "Fix" before approving' : '';
   if (ch === 'website') {
     $('.schema', card).hidden = false;
@@ -371,7 +385,13 @@ function renderChannel(ch) {
 
 function renderExport() {
   const approved = Object.keys(state.drafts).filter((c) => state.status[c] === 'approved');
-  $('#export-count').textContent = `${approved.length} of ${Object.keys(state.drafts).length} approved`;
+  const total = Object.keys(state.drafts).length;
+  const countEl = $('#export-count');
+  const text = total ? `${approved.length} of ${total} approved` : '';
+  if (countEl.textContent && countEl.textContent !== text) { countEl.classList.remove('bump'); void countEl.offsetWidth; countEl.classList.add('bump'); }
+  countEl.textContent = text;
+  $('#empty').hidden = total > 0;
+  $('#log-count').textContent = state.log.length ? `(${state.log.length})` : '';
   $('#export-btn').disabled = !approved.length;
   $('#log').innerHTML = state.log.slice().reverse().map((l) => `<li><time>${l.time}</time> ${esc(l.text)}</li>`).join('');
 }
@@ -394,28 +414,45 @@ async function generate(channels, note) {
   state.angle = $('#angle').value;
   const btn = $('#generate');
   const t0 = performance.now();
-  btn.disabled = true;
-  $('#gen-status').textContent = useAI() ? 'Writing with Claude…' : 'Writing drafts…';
+  btn.classList.add('loading');
+  $('.label', btn).textContent = 'Writing…';
+  $('#gen-status').textContent = useAI() ? 'Writing with Claude. This takes 10 to 20 seconds.' : 'Writing drafts…';
+  $('#empty').hidden = true;
+  for (const ch of channels) { const c = $(`[data-channel="${ch}"]`); c.hidden = false; c.classList.add('loading'); }
+  // Keep the loading state up long enough to read, so instant results don't flicker.
+  const minWait = new Promise((r) => setTimeout(r, 450));
   try {
     await Promise.all(channels.map(async (ch) => {
-      state.drafts[ch] = useAI()
+      const text = useAI()
         ? await aiDraft(state.product, state.angle, ch, spec, note)
         : demoDraft(state.product, state.angle, ch, state.variant);
+      await minWait;
+      state.drafts[ch] = text;
+      $(`[data-channel="${ch}"]`).classList.remove('loading');
       state.status[ch] = 'draft';
       $(`[data-channel="${ch}"]`).classList.remove('editing');
       renderChannel(ch);
     }));
     for (const ch of Object.keys(CHANNELS)) if (!channels.includes(ch) && !$(`#ch-${ch}`).checked) { delete state.drafts[ch]; renderChannel(ch); }
     const secs = ((performance.now() - t0) / 1000).toFixed(1);
+    state.lastSecs = secs;
     $('#gen-status').textContent = `${channels.length} draft${channels.length > 1 ? 's' : ''} ready in ${secs}s. Review each one below.`;
     logEvent(`generated ${channels.map((c) => CHANNELS[c].label).join(', ')} for ${state.product.short}${note ? ' with feedback' : ''}`);
     renderExport();
     $('#drafts').scrollIntoView({ behavior: 'smooth', block: 'start' });
   } catch (e) {
     $('#gen-status').textContent = `The AI request failed (${e.message}). Switch to the built-in engine or check the key.`;
+    for (const ch of channels) { const c = $(`[data-channel="${ch}"]`); c.classList.remove('loading'); if (!state.drafts[ch]) c.hidden = true; }
+    renderExport();
   } finally {
-    btn.disabled = false;
+    btn.classList.remove('loading');
+    $('.label', btn).textContent = 'Write drafts';
   }
+}
+
+function flash(b, on, off) {
+  b.textContent = on; b.classList.add('flash');
+  setTimeout(() => { b.textContent = off; b.classList.remove('flash'); }, 1400);
 }
 
 function onCardAction(e) {
@@ -436,6 +473,8 @@ function onCardAction(e) {
   } else if (act === 'approve') {
     state.status[ch] = 'approved';
     logEvent(`approved ${CHANNELS[ch].label}`);
+    card.classList.add('just-approved');
+    setTimeout(() => card.classList.remove('just-approved'), 1200);
     renderChannel(ch);
   } else if (act === 'changes') {
     const note = $('.note-input', card).value.trim();
@@ -445,10 +484,10 @@ function onCardAction(e) {
     state.variant += 1;
     generate([ch], note).then(() => { $('.note-input', card).value = ''; });
   } else if (act === 'copy') {
-    navigator.clipboard?.writeText(state.drafts[ch]).then(() => { b.textContent = 'Copied'; setTimeout(() => (b.textContent = 'Copy'), 1500); });
+    navigator.clipboard?.writeText(state.drafts[ch]).then(() => flash(b, 'Copied', 'Copy'));
   } else if (act === 'copy-schema') {
     navigator.clipboard?.writeText(`<script type="application/ld+json">\n${schemaFor(state.drafts[ch], state.product)}\n</script>`)
-      .then(() => { b.textContent = 'Copied'; setTimeout(() => (b.textContent = 'Copy schema'), 1500); });
+      .then(() => flash(b, 'Copied', 'Copy schema'));
   }
 }
 
@@ -486,7 +525,20 @@ function exportPack() {
 function init() {
   const sel = $('#preset');
   sel.innerHTML = Object.entries(PRODUCTS).map(([k, p]) => `<option value="${k}">${esc(p.name)}</option>`).join('') + '<option value="">Paste your own…</option>';
-  const fill = () => { if (sel.value) $('#spec').value = specText(PRODUCTS[sel.value]); else { $('#spec').value = ''; $('#spec').focus(); } };
+  const img = $('#product-img');
+  const fill = () => {
+    const p = PRODUCTS[sel.value];
+    const frame = img.closest('.img-frame');
+    if (p) {
+      $('#spec').value = specText(p);
+      frame.classList.remove('loaded');
+      img.onload = img.onerror = () => frame.classList.add('loaded');
+      img.src = p.image; img.alt = p.name;
+    } else {
+      $('#spec').value = ''; img.removeAttribute('src'); img.alt = ''; frame.classList.add('loaded');
+      $('.spec-box').open = true; $('#spec').focus();
+    }
+  };
   sel.addEventListener('change', fill);
   fill();
   $('#angle').innerHTML = Object.entries(ANGLES).map(([k, v]) => `<option value="${k}">${esc(v)}</option>`).join('');
@@ -510,6 +562,7 @@ function init() {
   $('#drafts').addEventListener('click', onCardAction);
   $('#drafts').addEventListener('input', (e) => { if (e.target.classList.contains('editor')) onEditorInput(e); });
   $('#export-btn').addEventListener('click', exportPack);
+  document.documentElement.classList.remove('no-js');
   renderExport();
 }
 

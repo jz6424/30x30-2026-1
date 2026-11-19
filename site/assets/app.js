@@ -2,6 +2,12 @@
 // engines and AI crawlers read it without running any script.
 document.documentElement.classList.remove('no-js');
 
+// Image placeholders: drop the shimmer once each photo has loaded (or failed).
+for (const img of document.querySelectorAll('.img-frame img')) {
+  const done = () => img.closest('.img-frame').classList.add('loaded');
+  if (img.complete) done(); else { img.addEventListener('load', done, { once: true }); img.addEventListener('error', done, { once: true }); }
+}
+
 // "Find your device" chooser
 const STORE = 'https://www.aphronabeauty.com';
 const utm = (c) => `?utm_source=aphrona-learn&utm_medium=landing&utm_campaign=${c}`;
@@ -44,13 +50,16 @@ document.querySelectorAll('.choice').forEach((btn) => {
     const p = PICKS[btn.dataset.pick];
     if (!p || !result) return;
     const camp = `chooser-${btn.dataset.pick}`;
+    result.classList.remove('updated');
+    void result.offsetWidth; // restart the entrance animation
     result.innerHTML = `
-      <p class="eyebrow">Our suggestion</p>
       <h3>${p.name}</h3>
       <p class="why">${p.why}</p>
       <div class="cta-row">
-        <a class="btn" href="${STORE}${p.url}${utm(camp)}">${p.price ? `Shop now, ${p.price}` : 'Browse the range'}</a>
+        <a class="btn btn-primary" href="${STORE}${p.url}${utm(camp)}">${p.price ? `Shop for ${p.price}` : 'Browse the range'}</a>
+        ${p.alt ? `<a class="text-link" href="${STORE}${p.alt.url}${utm(camp + '-alt')}">Or the ${p.alt.name}</a>` : ''}
       </div>
-      ${p.alt ? `<p class="note">Also consider: <a href="${STORE}${p.alt.url}${utm(camp + '-alt')}">${p.alt.name}</a>. ${p.alt.why}</p>` : ''}`;
+      ${p.alt ? `<p class="note">${p.alt.why}</p>` : ''}`;
+    result.classList.add('updated');
   });
 });
